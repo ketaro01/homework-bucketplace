@@ -16,21 +16,6 @@ const PictureMainBox = styled.div`
       display: flex;
       align-items: center;
       margin-left: 59px;
-      > button {
-        cursor: pointer;
-        width: 24px;
-        height: 24px;
-        border: none;
-        outline:none;
-        background-color: transparent;
-        background-image: url('/img/bt-checkbox-checked.png');
-        background-position: center center;
-        opacity: 1;
-        transition: opacity 0.2s;
-        &:hover, &:active {
-          opacity: 0.6;
-        }
-      }
       label {
         cursor: pointer;
         margin-left: 6px;
@@ -40,20 +25,36 @@ const PictureMainBox = styled.div`
   }
 `;
 
+const ScrapButton = styled.button`
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  border: none;
+  outline:none;
+  background-color: transparent;
+  background-image: url('/img/${props => props.viewScrap ? 'bt-checkbox-checked' : 'white'}.png');
+  background-position: center center;
+  opacity: 1;
+  transition: opacity 0.2s;
+  &:hover, &:active {
+    opacity: 0.6;
+  }
+`;
+
 const PictureContainer = () => {
   const [viewScrap, setViewScrap] = useState(false);
   const handleOnClickScrap = () => {
     setViewScrap(!viewScrap);
   };
-  console.log(viewScrap);
+
   return (
     <PictureMainBox>
       <div className="top-bar">
         <div className="scrap-box">
-          <button className="scrap-btn" id="scrap_btn" onClick={handleOnClickScrap} />
+          <ScrapButton viewScrap={viewScrap} id="scrap_btn" onClick={handleOnClickScrap} />
           <label htmlFor="scrap_btn">스크랩한 것만 보기</label>
         </div>
-        <PictureList />
+        <PictureList viewScrap={viewScrap} />
       </div>
     </PictureMainBox>
   );

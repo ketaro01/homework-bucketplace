@@ -26,46 +26,55 @@ const PictureItemBox = styled.div`
     height: 100%;
     border-radius: 10px;
   }
-  > button {
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
-    z-index: 10;
-    cursor: pointer;
-    width: 32px;
-    height: 32px;
-    border: none;
-    outline: none;
-    background-color: transparent;
-    background-image: url(${props => props.isScrap ? '/img/blue.png' : '/img/on-img.png'});
-    background-size: 100%;
-    background-repeat: no-repeat;
-    background-position: center center;
-    opacity: 1;
-    transition: opacity 0.2s;
-    &:hover, &:active {
-      opacity: 0.6;
-    }
-  }
 `;
 
+const ItemScrapButton = styled.button`
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 10;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  background-image: url(${props => props.isScrap ? '/img/blue.png' : '/img/on-img.png'});
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  opacity: 1;
+  transition: opacity 0.2s;
+  &:hover, &:active {
+    opacity: 0.6;
+  }
+`
+
 class PictureItem extends Component {
+  constructor(props) {
+    super(props);
+    this.handleOnClickScrap = this.handleOnClickScrap.bind(this);
+  }
   shouldComponentUpdate(nextProps, nextState, nextContext) {
     return JSON.stringify(nextProps) !== JSON.stringify(this.props);
   }
 
+  handleOnClickScrap() {
+    const { item, onClickScrap } = this.props;
+    onClickScrap(item);
+  }
   render() {
     const { item, isScrap } = this.props;
-    const { id, image_url, nickname, profile_image_url, description } = item;
+    const { image_url, nickname, profile_image_url, description } = item;
     return (
       <ItemBox>
         <div className="user-info">
           <img src={profile_image_url} alt="avata" width={36} height={36}/>
           <span>{nickname}</span>
         </div>
-        <PictureItemBox isScrap={isScrap} >
+        <PictureItemBox>
           <img src={image_url} alt={description}/>
-          <button />
+          <ItemScrapButton isScrap={isScrap} onClick={this.handleOnClickScrap}/>
         </PictureItemBox>
       </ItemBox>
     );
@@ -73,8 +82,14 @@ class PictureItem extends Component {
 }
 
 PictureItem.propTypes = {
-  item: PropTypes.shape({}).isRequired,
+  item: PropTypes.shape({
+    id: PropTypes.number,
+    image_url: PropTypes.string,
+    nickname: PropTypes.string,
+    profile_image_url: PropTypes.string,
+  }).isRequired,
   isScrap: PropTypes.bool,
+  onClickScrap: PropTypes.func.isRequired,
 };
 
 PictureItem.defaultProps = {
