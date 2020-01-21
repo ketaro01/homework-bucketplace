@@ -1,11 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
-
-const LoadingWrap = styled.div`
-  > img {
-    width: 100px;
-  }
-`;
+import { LoadingWrap } from '../styled';
 
 /**
  * 날짜 : 2020.01.21

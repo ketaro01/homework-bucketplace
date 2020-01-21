@@ -1,24 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import LoadingComp from './LoadingComp';
 import PictureItem from './PictureItem';
-import { getPictureUrl } from '../lib/config';
+import { PictureBoxWrap } from '../styled';
+import { getPictureUrl, ITEM_SCRAP_LIST } from '../lib/config';
 import helper from '../lib/helper';
 import http from '../lib/http';
 import storage from '../lib/storage';
-
-const PictureBoxWrap = styled.div`
-  width: calc(100% - 120px);
-  margin: 0 auto;
-  padding-top: 30px;
-  box-sizing: border-box;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-`;
-
-const ITEM_SCRAP_LIST = 'ITEM_SCRAP_LIST';
 
 class PictureList extends Component {
   constructor (props) {
